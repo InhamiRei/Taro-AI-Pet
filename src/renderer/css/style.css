@@ -1,0 +1,508 @@
+/* ========================================
+   Taro AI Pet - 桌宠样式表
+   ======================================== */
+
+/* 基础重置 */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html, body {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  background: transparent;
+  user-select: none;
+}
+
+#app {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-end;
+  padding-bottom: 20px;
+}
+
+/* ========================================
+   对话气泡
+   ======================================== */
+.bubble {
+  position: relative;
+  margin-bottom: 8px;
+  max-width: 400px;
+  width: calc(100% - 20px);
+  pointer-events: auto;
+  z-index: 10;
+  flex-shrink: 1;
+}
+
+.bubble.hidden {
+  display: none;
+}
+
+.bubble.fade-out {
+  animation: bubble-disappear 0.3s ease-out forwards;
+}
+
+.bubble-content {
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(10px);
+  border-radius: 18px;
+  padding: 12px 18px;
+  font-family: "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
+  font-size: 13px;
+  line-height: 1.5;
+  color: #2c2c2c;
+  box-shadow:
+    0 4px 20px rgba(0, 0, 0, 0.08),
+    0 1px 3px rgba(0, 0, 0, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.6);
+  max-height: 180px;
+  overflow-y: auto;
+}
+
+.bubble-content::-webkit-scrollbar {
+  width: 4px;
+}
+
+.bubble-content::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.bubble-content::-webkit-scrollbar-thumb {
+  background: rgba(0, 0, 0, 0.15);
+  border-radius: 2px;
+}
+
+.bubble-content::-webkit-scrollbar-thumb:hover {
+  background: rgba(0, 0, 0, 0.25);
+}
+
+.bubble-tail {
+  width: 0;
+  height: 0;
+  border-left: 8px solid transparent;
+  border-right: 8px solid transparent;
+  border-top: 10px solid rgba(255, 255, 255, 0.95);
+  margin: 0 auto;
+  filter: drop-shadow(0 2px 2px rgba(0, 0, 0, 0.05));
+}
+
+/* ========================================
+   桌宠容器
+   ======================================== */
+.pet-container {
+  position: relative;
+  width: 160px;
+  height: 200px;
+  cursor: grab;
+  pointer-events: auto;
+  -webkit-app-region: no-drag;
+  flex-shrink: 0;
+}
+
+.pet-container:active {
+  cursor: grabbing;
+}
+
+.pet {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  animation: float 3s ease-in-out infinite;
+}
+
+/* ========================================
+   身体
+   ======================================== */
+.body {
+  position: absolute;
+  bottom: 30px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 120px;
+  height: 110px;
+  background: linear-gradient(180deg, #F5E6D3 0%, #EDD9C4 100%);
+  border-radius: 50% 50% 48% 48%;
+  box-shadow:
+    inset 0 -8px 15px rgba(0, 0, 0, 0.04),
+    0 4px 10px rgba(0, 0, 0, 0.06);
+}
+
+/* ========================================
+   耳朵
+   ======================================== */
+.ear {
+  position: absolute;
+  top: 22px;
+  width: 0;
+  height: 0;
+  border-left: 18px solid transparent;
+  border-right: 18px solid transparent;
+  border-bottom: 35px solid #F5E6D3;
+  z-index: 1;
+  filter: drop-shadow(0 -2px 3px rgba(0,0,0,0.05));
+}
+
+.ear-left {
+  left: 22px;
+  transform: rotate(-12deg);
+}
+
+.ear-right {
+  right: 22px;
+  transform: rotate(12deg);
+}
+
+.ear-inner {
+  position: absolute;
+  top: 10px;
+  left: -10px;
+  width: 0;
+  height: 0;
+  border-left: 10px solid transparent;
+  border-right: 10px solid transparent;
+  border-bottom: 20px solid #FFB5C5;
+}
+
+/* ========================================
+   脸部
+   ======================================== */
+.face {
+  position: absolute;
+  top: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100px;
+  height: 80px;
+}
+
+/* 眼睛 */
+.eye {
+  position: absolute;
+  top: 15px;
+  width: 22px;
+  height: 26px;
+  background: #2c2c2c;
+  border-radius: 50%;
+  animation: blink 4s ease-in-out infinite;
+}
+
+.eye-left {
+  left: 15px;
+}
+
+.eye-right {
+  right: 15px;
+}
+
+.pupil {
+  position: absolute;
+  bottom: 4px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 16px;
+  height: 18px;
+  background: #1a1a1a;
+  border-radius: 50%;
+}
+
+.shine {
+  position: absolute;
+  top: 5px;
+  right: 4px;
+  width: 7px;
+  height: 7px;
+  background: #fff;
+  border-radius: 50%;
+}
+
+/* 腮红 */
+.blush {
+  position: absolute;
+  top: 38px;
+  width: 20px;
+  height: 12px;
+  background: rgba(255, 150, 170, 0.45);
+  border-radius: 50%;
+}
+
+.blush-left {
+  left: 2px;
+}
+
+.blush-right {
+  right: 2px;
+}
+
+/* 鼻子 */
+.nose {
+  position: absolute;
+  top: 38px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 0;
+  height: 0;
+  border-left: 5px solid transparent;
+  border-right: 5px solid transparent;
+  border-top: 6px solid #FF9EB5;
+}
+
+/* 嘴巴 */
+.mouth {
+  position: absolute;
+  top: 46px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 16px;
+  height: 6px;
+  border-bottom: 2.5px solid #D4A08A;
+  border-radius: 0 0 50% 50%;
+}
+
+/* ========================================
+   尾巴
+   ======================================== */
+.tail {
+  position: absolute;
+  bottom: 35px;
+  right: -5px;
+  width: 50px;
+  height: 20px;
+  border: 4px solid #EDD9C4;
+  border-color: #EDD9C4 #EDD9C4 transparent transparent;
+  border-radius: 0 25px 0 0;
+  transform-origin: left center;
+  animation: tail-wag 2s ease-in-out infinite;
+}
+
+/* ========================================
+   前爪
+   ======================================== */
+.paw {
+  position: absolute;
+  bottom: 22px;
+  width: 28px;
+  height: 18px;
+  background: #EDD9C4;
+  border-radius: 50% 50% 50% 50%;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.06);
+}
+
+.paw-left {
+  left: 32px;
+}
+
+.paw-right {
+  right: 32px;
+}
+
+/* ========================================
+   动画关键帧
+   ======================================== */
+
+/* 悠闲漂浮 */
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-8px); }
+}
+
+/* 眨眼 */
+@keyframes blink {
+  0%, 90%, 100% { transform: scaleY(1); }
+  95% { transform: scaleY(0.05); }
+}
+
+/* 尾巴摇摆 */
+@keyframes tail-wag {
+  0%, 100% { transform: rotate(-15deg); }
+  50% { transform: rotate(15deg); }
+}
+
+/* 开心弹跳 */
+@keyframes bounce {
+  0%, 100% { transform: translateY(0) scale(1); }
+  20% { transform: translateY(-20px) scale(1.05, 0.95); }
+  40% { transform: translateY(0) scale(0.95, 1.05); }
+  60% { transform: translateY(-10px) scale(1.02, 0.98); }
+  80% { transform: translateY(0) scale(0.98, 1.02); }
+}
+
+/* 思考摇头 */
+@keyframes think {
+  0%, 100% { transform: rotate(0deg) translateY(0); }
+  25% { transform: rotate(-5deg) translateY(-3px); }
+  75% { transform: rotate(5deg) translateY(-3px); }
+}
+
+/* 打瞌睡 */
+@keyframes sleep-float {
+  0%, 100% { transform: translateY(0) rotate(-2deg); }
+  50% { transform: translateY(-3px) rotate(2deg); }
+}
+
+/* 气泡出现 */
+@keyframes bubble-appear {
+  from {
+    opacity: 0;
+    transform: translateY(10px) scale(0.9);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+/* 气泡消失 */
+@keyframes bubble-disappear {
+  from {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+  to {
+    opacity: 0;
+    transform: translateY(-10px) scale(0.9);
+  }
+}
+
+/* 闪光特效 */
+@keyframes sparkle {
+  0% { opacity: 0; transform: scale(0) rotate(0deg); }
+  50% { opacity: 1; transform: scale(1) rotate(180deg); }
+  100% { opacity: 0; transform: scale(0) rotate(360deg); }
+}
+
+/* 心心飘起 */
+@keyframes heart-float {
+  0% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(-60px) scale(0.5);
+  }
+}
+
+/* 思考点点 */
+@keyframes dots {
+  0%, 20% { opacity: 0; }
+  40%, 100% { opacity: 1; }
+}
+
+/* ========================================
+   桌宠状态变化
+   ======================================== */
+
+/* 开心状态 */
+.pet[data-state="happy"] {
+  animation: bounce 0.8s ease-in-out;
+}
+
+.pet[data-state="happy"] .tail {
+  animation: tail-wag 0.3s ease-in-out infinite;
+}
+
+.pet[data-state="happy"] .eye {
+  transform: scaleY(0.3);
+  border-radius: 50%;
+  animation: none;
+}
+
+/* 思考状态 */
+.pet[data-state="thinking"] {
+  animation: think 1.5s ease-in-out infinite;
+}
+
+.pet[data-state="thinking"] .eye {
+  animation: none;
+}
+
+/* 睡觉状态 */
+.pet[data-state="sleeping"] {
+  animation: sleep-float 4s ease-in-out infinite;
+}
+
+.pet[data-state="sleeping"] .eye {
+  transform: scaleY(0.05);
+  animation: none;
+}
+
+.pet[data-state="sleeping"] .mouth {
+  width: 10px;
+  height: 10px;
+  border: none;
+  background: #D4A08A;
+  border-radius: 50%;
+}
+
+.pet[data-state="sleeping"] .tail {
+  animation: tail-wag 4s ease-in-out infinite;
+}
+
+/* ========================================
+   特效元素
+   ======================================== */
+.effects {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 20;
+}
+
+.effect-heart {
+  position: absolute;
+  font-size: 18px;
+  animation: heart-float 1.2s ease-out forwards;
+}
+
+.effect-sparkle {
+  position: absolute;
+  width: 8px;
+  height: 8px;
+  background: #FFD700;
+  clip-path: polygon(50% 0%, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%);
+  animation: sparkle 0.8s ease-out forwards;
+}
+
+.effect-zzz {
+  position: absolute;
+  top: 10px;
+  right: 15px;
+  font-size: 16px;
+  font-weight: bold;
+  color: #B5C7E3;
+  opacity: 0;
+}
+
+.effect-zzz:nth-child(1) { animation: heart-float 2s ease-out 0s infinite; }
+.effect-zzz:nth-child(2) { animation: heart-float 2s ease-out 0.5s infinite; right: 5px; font-size: 12px; }
+.effect-zzz:nth-child(3) { animation: heart-float 2s ease-out 1s infinite; right: 25px; font-size: 20px; }
+
+/* 思考状态的点点点 */
+.thinking-dots {
+  position: absolute;
+  top: 5px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 4px;
+}
+
+.thinking-dots .dot {
+  width: 8px;
+  height: 8px;
+  background: rgba(180, 180, 200, 0.7);
+  border-radius: 50%;
+  animation: dots 1.2s ease-in-out infinite;
+}
+
+.thinking-dots .dot:nth-child(2) { animation-delay: 0.2s; }
+.thinking-dots .dot:nth-child(3) { animation-delay: 0.4s; }

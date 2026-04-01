@@ -1,0 +1,28 @@
+{
+  "name": "taro-ai-pet",
+  "version": "1.0.0",
+  "description": "Taro AI Desktop Pet - 一个可爱的AI桌宠",
+  "main": "src/main/index.js",
+  "scripts": {
+    "start": "electron .",
+    "dev": "electron . --dev",
+    "build": "electron-builder --mac"
+  },
+  "author": "Taro",
+  "license": "MIT",
+  "dependencies": {
+    "dotenv": "^16.4.5"
+  },
+  "devDependencies": {
+    "electron": "^30.0.0",
+    "electron-builder": "^24.13.3"
+  },
+  "build": {
+    "appId": "com.taro.ai-pet",
+    "productName": "Taro AI Pet",
+    "mac": {
+      "category": "public.app-category.entertainment"
+    },
+    "files": ["src/**/*", "assets/**/*"]
+  }
+}
