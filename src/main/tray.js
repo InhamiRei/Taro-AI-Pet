@@ -8,15 +8,15 @@ const TRANSPARENT_ICON = 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAAB
 
 // 可用模型列表
 const AVAILABLE_MODELS = [
-  { key: 'maozi', label: '🎩 帽子原皮' },
-  { key: 'qingjiaomao', label: '🫑 青椒变装' },
+  { key: 'maozi', label: '帽子原皮' },
+  { key: 'qingjiaomao', label: '青椒变装' },
 ];
 
 /**
  * 构建菜单模板
  */
 function buildMenuTemplate(actions, currentModel) {
-  const { onTrigger, onToggleScheduler, onQuit, onResetPosition, onSwitchModel, schedulerEnabled } = actions;
+  const { onTrigger, onToggleScheduler, onQuit, onResetPosition, onSwitchModel, schedulerEnabled, animations, onPlayAnimation } = actions;
 
   const modelMenuItems = AVAILABLE_MODELS.map(m => ({
     label: m.label,
@@ -29,33 +29,77 @@ function buildMenuTemplate(actions, currentModel) {
     },
   }));
 
-  return Menu.buildFromTemplate([
-    { label: '🐱 Taro AI Pet', enabled: false },
+  // 构建动画子菜单
+  let animSubMenu = [];
+  if (animations) {
+    if (animations.expressions && animations.expressions.length > 0) {
+      animSubMenu.push({ label: '-- 表情 --', enabled: false });
+      animations.expressions.forEach(expr => {
+        animSubMenu.push({
+          label: expr.name,
+          click: () => onPlayAnimation && onPlayAnimation('expression', expr.id)
+        });
+      });
+    }
+    if (animations.motions && animations.motions.length > 0) {
+      if (animSubMenu.length > 0) animSubMenu.push({ type: 'separator' });
+      animSubMenu.push({ label: '-- 动作 --', enabled: false });
+      animations.motions.forEach(mot => {
+        animSubMenu.push({
+          label: mot.name,
+          click: () => onPlayAnimation && onPlayAnimation('motion', { group: mot.group, index: mot.index })
+        });
+      });
+    }
+  }
+
+  // 如果有动画菜单，加一个恢复默认选项
+  if (animSubMenu.length > 0) {
+    animSubMenu.unshift(
+       { label: '✨ 恢复默认', click: () => onPlayAnimation && onPlayAnimation('reset', null) },
+       { type: 'separator' }
+    );
+  }
+
+  const template = [
+    { label: 'Taro AI Pet', enabled: false },
     { type: 'separator' },
     {
-      label: '📸 立即观察桌面',
+      label: '立即观察桌面',
       click: () => onTrigger(),
     },
     {
-      label: schedulerEnabled ? '⏸ 暂停定时观察' : '▶️ 恢复定时观察',
+      label: schedulerEnabled ? '暂停定时观察' : '恢复定时观察',
       click: () => onToggleScheduler(!schedulerEnabled),
     },
     { type: 'separator' },
     {
-      label: '👗 切换模型',
+      label: '切换模型',
       submenu: modelMenuItems,
-    },
+    }
+  ];
+
+  if (animSubMenu.length > 0) {
+    template.push({
+      label: '▷ 播放动画',
+      submenu: animSubMenu,
+    });
+  }
+
+  template.push(
     { type: 'separator' },
     {
-      label: '📍 重置位置',
+      label: '重置位置',
       click: () => onResetPosition(),
     },
     { type: 'separator' },
     {
-      label: '❌ 退出',
+      label: '退出',
       click: () => onQuit(),
-    },
-  ]);
+    }
+  );
+
+  return Menu.buildFromTemplate(template);
 }
 
 /**
@@ -64,7 +108,7 @@ function buildMenuTemplate(actions, currentModel) {
 function createTray(actions) {
   const icon = nativeImage.createFromDataURL(TRANSPARENT_ICON);
   const tray = new Tray(icon);
-  tray.setTitle('🐱');
+  tray.setTitle('Taro');
 
   let schedulerEnabled = true;
 

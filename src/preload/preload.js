@@ -6,6 +6,7 @@ const { contextBridge, ipcRenderer } = require('electron');
 contextBridge.exposeInMainWorld('taroAPI', {
   // 触发截图分析
   triggerAnalysis: () => ipcRenderer.invoke('trigger-analysis'),
+  chat: (text) => ipcRenderer.invoke('chat', text),
 
   // 配置
   getConfig: () => ipcRenderer.invoke('get-config'),
@@ -22,8 +23,8 @@ contextBridge.exposeInMainWorld('taroAPI', {
   },
 
   // 右键菜单
-  showContextMenu: () => {
-    ipcRenderer.send('show-context-menu');
+  showContextMenu: (animations) => {
+    ipcRenderer.send('show-context-menu', animations);
   },
 
   // 监听主进程消息
@@ -32,6 +33,11 @@ contextBridge.exposeInMainWorld('taroAPI', {
   },
   onAIResponse: (callback) => {
     ipcRenderer.on('ai-response', (_, text) => callback(text));
+  },
+
+  // 动画回调
+  onPlayAnimation: (callback) => {
+    ipcRenderer.on('play-animation', (_, data) => callback(data));
   },
 
   // 模型切换

@@ -25,7 +25,15 @@
 				"Name": "眩晕.exp3.json",
 				"File": "眩晕.exp3.json"
 			}
-		]
+		],
+		"Motions": {
+			"Actions": [
+				{ "File": "动画-可爱pose.motion3.json" },
+				{ "File": "动画-舔青椒.motion3.json" },
+				{ "File": "动画-蹦蹦跳跳.motion3.json" },
+				{ "File": "动画-青椒伴舞.motion3.json" }
+			]
+		}
 	},
 	"Groups": [
 		{

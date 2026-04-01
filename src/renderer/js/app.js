@@ -27,6 +27,7 @@
   // ========== 状态管理 ==========
   let currentState = 'idle';
   let bubbleTimer = null;
+  let typeInterval = null; // 用于清理打字机效果
   let sleepTimer = null;
   let currentModel = null;
   let currentModelKey = 'maozi'; // 默认模型
@@ -67,6 +68,7 @@
       backgroundAlpha: 0,
       resolution: window.devicePixelRatio || 1,
       autoDensity: true,
+      clearBeforeRender: true, // 解决残留残影问题
       // 必须开启才能用 readPixels 做像素透明检测
       preserveDrawingBuffer: true,
     });
@@ -122,9 +124,11 @@
       }, 100);
 
       console.log('[Taro Pet] 模型已加载:', modelConfig.name);
-
+      
+      // Auto-debug removed to clean up code
       // 保存当前模型到配置
       window.taroAPI.updateConfig({ currentModel: modelKey });
+
 
     } catch (err) {
       console.error('[Taro Pet] 模型加载失败:', err);
@@ -191,6 +195,8 @@
 
     // 鼠标按下 - 开始拖拽
     document.addEventListener('mousedown', (e) => {
+      // 只有左键才触发拖拽
+      if (e.button !== 0) return;
       if (!isOverModel) return;
 
       isDragging = true;
@@ -216,22 +222,19 @@
       resetSleepTimer();
       spawnHearts(3);
 
-      const reactions = [
-        '(脸红) 笨、笨蛋！突然摸人家干什么！',
-        '(撇嘴) 哼，才不是因为你摸我就开心了呢！',
-        '(双手抱胸) 喂！不要随便碰我啊！',
-        '(偷偷看你) ……再摸一下也不是不可以啦。',
-        '(炸毛) 你这家伙到底把我当什么了！',
-      ];
-      const text = reactions[Math.floor(Math.random() * reactions.length)];
-      showBubble(text);
+      showBubble('(被摸到了...)');
       playRandomMotion();
+
+      // 动态获取 AI 回应避免写死
+      window.taroAPI.chat('用户刚刚用鼠标摸了摸你的头/身体，请给出一个简短的傲娇反应（包含括号动作，绝对不要超过20字）。').catch(() => {
+        showBubble('(撇嘴) 哼，别随便碰我！');
+      });
     });
 
     // 双击触发截图分析
     document.addEventListener('dblclick', (e) => {
       if (!isOverModel) return;
-      showBubble('(皱眉凑近屏幕) 让我看看你在干什么！');
+      showBubble('(凑近屏幕观察中...)');
       window.taroAPI.triggerAnalysis();
     });
 
@@ -239,7 +242,46 @@
     document.addEventListener('contextmenu', (e) => {
       if (!isOverModel) return;
       e.preventDefault();
-      window.taroAPI.showContextMenu();
+      
+      let animations = { expressions: [], motions: [] };
+      if (currentModel && currentModel.internalModel && currentModel.internalModel.settings) {
+        const settings = currentModel.internalModel.settings;
+        
+        // 提取表情
+        let exps = settings.expressions || [];
+        if (exps && exps.length > 0) {
+          animations.expressions = exps.map((def, idx) => {
+            const expName = def.Name || def.name || `表情 ${idx + 1}`;
+            return {
+              name: expName.replace('.exp3.json', ''),
+              id: def.Name || def.name || idx // Use name/ID directly for playback
+            };
+          });
+        }
+
+        // 提取动作
+        const motionsObj = settings.motions || {};
+        for (let groupName in motionsObj) {
+          const group = motionsObj[groupName];
+          if (Array.isArray(group)) {
+            group.forEach((motion, idx) => {
+              let mName = `${groupName} #${idx + 1}`;
+              if (motion.File || motion.file) {
+                mName = (motion.File || motion.file).split('/').pop().replace('.motion3.json', '');
+              } else if (motion.Name || motion.name) {
+                mName = (motion.Name || motion.name).replace('.motion3.json', '');
+              }
+              animations.motions.push({
+                name: mName,
+                group: groupName,
+                index: idx
+              });
+            });
+          }
+        }
+      }
+
+      window.taroAPI.showContextMenu(animations);
     });
 
     // 气泡区域的鼠标事件
@@ -258,11 +300,16 @@
   function playRandomMotion() {
     if (!currentModel) return;
     try {
-      const motionManager = currentModel.internalModel.motionManager;
-      const expressionManager = motionManager.expressionManager;
-      if (expressionManager && expressionManager.definitions && expressionManager.definitions.length > 0) {
-        const randomIdx = Math.floor(Math.random() * expressionManager.definitions.length);
-        currentModel.expression(randomIdx);
+      const settings = currentModel.internalModel.settings;
+      if (settings && settings.expressions && settings.expressions.length > 0) {
+        const randomIdx = Math.floor(Math.random() * settings.expressions.length);
+        const def = settings.expressions[randomIdx];
+        const expName = def.Name || def.name;
+        if (expName) {
+          currentModel.expression(expName);
+        } else {
+          currentModel.expression(randomIdx);
+        }
       }
     } catch (e) {
       console.warn('[Taro Pet] 动作播放失败:', e.message);
@@ -287,6 +334,35 @@
       if (modelKey !== currentModelKey && MODELS[modelKey]) {
         showBubble('(兴奋) 等一下，让我换个衣服~ ✨');
         loadModel(modelKey);
+      }
+    });
+
+    // 播放指定动画回调
+    window.taroAPI.onPlayAnimation((animData) => {
+      if (!currentModel) return;
+      try {
+        if (animData.type === 'expression') {
+          console.log('[DEBUG] Play expression:', animData.data);
+          const expManager = currentModel.internalModel?.motionManager?.expressionManager;
+          if (expManager) {
+            // try to use setExpression or similar if standard currentModel.expression fails
+            currentModel.expression(animData.data);
+          } else {
+            currentModel.expression(animData.data);
+          }
+          showBubble('(切换表情中...)');
+        } else if (animData.type === 'motion') {
+          console.log('[DEBUG] Play motion:', animData.data.group, animData.data.index);
+          currentModel.motion(animData.data.group, animData.data.index);
+          showBubble('(播放动作中...)');
+        } else if (animData.type === 'reset') {
+          console.log('[DEBUG] Restoring default state');
+          showBubble('(深呼吸，整理衣服...)');
+          // 彻底重新加载当前模型，百分百清除所有动作和道具残留
+          loadModel(currentModelKey);
+        }
+      } catch (err) {
+        console.warn('[Taro Pet] 动画播放失败:', err.message);
       }
     });
   }
@@ -331,17 +407,22 @@
       clearTimeout(bubbleTimer);
       bubbleTimer = null;
     }
+    if (typeInterval) {
+      clearInterval(typeInterval);
+      typeInterval = null;
+    }
 
     bubble.classList.remove('hidden', 'fade-out');
     bubbleText.textContent = '';
 
     let i = 0;
-    const typeInterval = setInterval(() => {
+    typeInterval = setInterval(() => {
       if (i < text.length) {
         bubbleText.textContent += text[i];
         i++;
       } else {
         clearInterval(typeInterval);
+        typeInterval = null;
 
         bubbleTimer = setTimeout(() => {
           bubble.classList.add('fade-out');

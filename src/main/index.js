@@ -14,7 +14,7 @@ require('dotenv').config({ path: envPath });
 const { buildMenuTemplate, createTray } = require('./tray');
 const { Scheduler } = require('./scheduler');
 const { captureScreen } = require('./screenshot');
-const { analyzeScreenshot } = require('./ai-service');
+const { analyzeScreenshot, generateChatResponse } = require('./ai-service');
 const { getConfig, updateConfig } = require('./config');
 
 let mainWindow = null;
@@ -111,6 +111,24 @@ function setupIPC() {
     await runAnalysis();
   });
 
+  // 纯文本交互对话
+  ipcMain.handle('chat', async (_, text) => {
+    if (!mainWindow) return;
+    try {
+      mainWindow.webContents.send('pet-state', 'thinking');
+      const response = await generateChatResponse(text);
+      mainWindow.webContents.send('ai-response', response);
+      mainWindow.webContents.send('pet-state', 'happy');
+      return response;
+    } catch (err) {
+      console.error('[AI交互失败]', err.message);
+      mainWindow.webContents.send('pet-state', 'idle');
+      const fallback = '喵...我走神了，再说一遍？ (╥﹏╥)';
+      mainWindow.webContents.send('ai-response', fallback);
+      return fallback;
+    }
+  });
+
   // 获取配置
   ipcMain.handle('get-config', () => getConfig());
 
@@ -137,12 +155,13 @@ function setupIPC() {
   });
 
   // 弹出右键菜单
-  ipcMain.on('show-context-menu', (event) => {
+  ipcMain.on('show-context-menu', (event, animations) => {
     if (!trayHelper || !trayActions) return;
     
     // 获取当前状态
     const schedulerEnabled = trayHelper.getSchedulerEnabled();
     const currentModel = getCurrentModel();
+    const win = BrowserWindow.fromWebContents(event.sender);
     
     const menu = buildMenuTemplate({
       ...trayActions,
@@ -155,11 +174,14 @@ function setupIPC() {
       onSwitchModel: (key) => {
         trayActions.onSwitchModel(key);
         trayHelper.updateMenu();
+      },
+      animations: animations || null,
+      onPlayAnimation: (type, data) => {
+        if (win) win.webContents.send('play-animation', { type, data });
       }
     }, currentModel);
     
     // 在当前窗口弹出
-    const win = BrowserWindow.fromWebContents(event.sender);
     menu.popup({ window: win });
   });
 }

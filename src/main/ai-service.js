@@ -155,4 +155,85 @@ async function analyzeScreenshot(base64Image) {
   }
 }
 
-module.exports = { analyzeScreenshot };
+/**
+ * 直接进行文本对话
+ * @param {string} text - 用户输入的文字或动作交互提示
+ * @returns {Promise<string>} AI 回复文本
+ */
+async function generateChatResponse(text) {
+  const apiKey = process.env.DASHSCOPE_API_KEY;
+  const model = process.env.AI_MODEL || 'qwen-vl-max';
+
+  if (!apiKey) {
+    throw new Error('未设置 DASHSCOPE_API_KEY 环境变量');
+  }
+
+  const userMessage = {
+    role: 'user',
+    content: text,
+  };
+
+  const messages = [
+    { role: 'system', content: SYSTEM_PROMPT },
+    ...conversationHistory,
+    userMessage,
+  ];
+
+  console.log(`[AI] 正在进行文本交互调用...`);
+
+  const controller = new AbortController();
+  const timeout = setTimeout(() => controller.abort(), 15000); // 15 秒超时
+
+  try {
+    const response = await fetch(
+      'https://dashscope.aliyuncs.com/compatible-mode/v1/chat/completions',
+      {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${apiKey}`,
+        },
+        body: JSON.stringify({
+          model,
+          messages,
+          max_tokens: 150,
+          temperature: 0.9,
+          top_p: 0.85,
+          presence_penalty: 1.2,
+        }),
+        signal: controller.signal,
+      }
+    );
+
+    clearTimeout(timeout);
+
+    if (!response.ok) {
+      const errText = await response.text();
+      throw new Error(`API 调用失败 (${response.status}): ${errText}`);
+    }
+
+    const data = await response.json();
+    const aiText = data.choices?.[0]?.message?.content || '喵？';
+
+    console.log(`[AI] 交互回复: ${aiText}`);
+
+    conversationHistory.push(
+      { role: 'user', content: `（交互动作）${text}` },
+      { role: 'assistant', content: aiText }
+    );
+
+    if (conversationHistory.length > MAX_HISTORY * 2) {
+      conversationHistory = conversationHistory.slice(-MAX_HISTORY * 2);
+    }
+
+    return aiText;
+  } catch (err) {
+    clearTimeout(timeout);
+    if (err.name === 'AbortError') {
+      throw new Error('交互超时');
+    }
+    throw err;
+  }
+}
+
+module.exports = { analyzeScreenshot, generateChatResponse };

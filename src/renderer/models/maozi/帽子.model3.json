@@ -28,7 +28,13 @@
 				"Name": "脱帽.exp3.json",
 				"File": "脱帽.exp3.json"
 			}
-		]
+		],
+		"Motions": {
+			"Actions": [
+				{ "File": "动画-哭哭.motion3.json" },
+				{ "File": "动画-舔小苏打.motion3.json" }
+			]
+		}
 	},
 	"Groups": [
 		{

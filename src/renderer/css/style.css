@@ -37,6 +37,8 @@ html, body {
   z-index: 100;
   flex-shrink: 0;
   margin-bottom: 6px;
+  position: relative;
+  top: 20px;
   animation: bubble-appear 0.3s ease-out;
 }
 
