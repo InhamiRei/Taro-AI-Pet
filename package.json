@@ -11,7 +11,9 @@
   "author": "Taro",
   "license": "MIT",
   "dependencies": {
-    "dotenv": "^16.4.5"
+    "dotenv": "^16.4.5",
+    "pixi-live2d-display": "^0.4.0",
+    "pixi.js": "^7.3.3"
   },
   "devDependencies": {
     "electron": "^30.0.0",
@@ -23,6 +25,10 @@
     "mac": {
       "category": "public.app-category.entertainment"
     },
-    "files": ["src/**/*", "assets/**/*"]
+    "files": [
+      "src/**/*",
+      "assets/**/*",
+      "moxing/**/*"
+    ]
   }
 }

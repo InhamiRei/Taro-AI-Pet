@@ -21,11 +21,21 @@ contextBridge.exposeInMainWorld('taroAPI', {
     ipcRenderer.send('window-move', { x, y });
   },
 
+  // 右键菜单
+  showContextMenu: () => {
+    ipcRenderer.send('show-context-menu');
+  },
+
   // 监听主进程消息
   onPetState: (callback) => {
     ipcRenderer.on('pet-state', (_, state) => callback(state));
   },
   onAIResponse: (callback) => {
     ipcRenderer.on('ai-response', (_, text) => callback(text));
+  },
+
+  // 模型切换
+  onSwitchModel: (callback) => {
+    ipcRenderer.on('switch-model', (_, modelKey) => callback(modelKey));
   },
 });

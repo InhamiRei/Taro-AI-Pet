@@ -13,6 +13,7 @@ const CONFIG_FILE = path.join(
 const DEFAULT_CONFIG = {
   interval: parseInt(process.env.SCREENSHOT_INTERVAL) || 300000, // 默认 5 分钟
   autoStart: true, // 启动时自动开始定时观察
+  currentModel: 'maozi', // 默认 Live2D 模型
 };
 
 /**

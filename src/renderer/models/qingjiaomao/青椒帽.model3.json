@@ -1,0 +1,46 @@
+{
+	"Version": 3,
+	"FileReferences": {
+		"Moc": "青椒帽.moc3",
+		"Textures": [
+			"青椒帽.8192/texture_00.png",
+			"青椒帽.8192/texture_01.png"
+		],
+		"Physics": "青椒帽.physics3.json",
+		"DisplayInfo": "青椒帽.cdi3.json",
+		"Expressions": [
+			{
+				"Name": "兴奋.exp3.json",
+				"File": "兴奋.exp3.json"
+			},
+			{
+				"Name": "吓人.exp3.json",
+				"File": "吓人.exp3.json"
+			},
+			{
+				"Name": "生气.exp3.json",
+				"File": "生气.exp3.json"
+			},
+			{
+				"Name": "眩晕.exp3.json",
+				"File": "眩晕.exp3.json"
+			}
+		]
+	},
+	"Groups": [
+		{
+			"Target": "Parameter",
+			"Name": "LipSync",
+			"Ids": []
+		},
+		{
+			"Target": "Parameter",
+			"Name": "EyeBlink",
+			"Ids": [
+				"ParamEyeLOpen",
+				"ParamEyeROpen"
+			]
+		}
+	],
+	"HitAreas": []
+}

@@ -1,0 +1,49 @@
+{
+	"Version": 3,
+	"FileReferences": {
+		"Moc": "帽子.moc3",
+		"Textures": [
+			"帽子.8192/texture_00.png"
+		],
+		"Physics": "帽子.physics3.json",
+		"DisplayInfo": "帽子.cdi3.json",
+		"Expressions": [
+			{
+				"Name": "兴奋.exp3.json",
+				"File": "兴奋.exp3.json"
+			},
+			{
+				"Name": "吓人.exp3.json",
+				"File": "吓人.exp3.json"
+			},
+			{
+				"Name": "生气.exp3.json",
+				"File": "生气.exp3.json"
+			},
+			{
+				"Name": "眩晕.exp3.json",
+				"File": "眩晕.exp3.json"
+			},
+			{
+				"Name": "脱帽.exp3.json",
+				"File": "脱帽.exp3.json"
+			}
+		]
+	},
+	"Groups": [
+		{
+			"Target": "Parameter",
+			"Name": "EyeBlink",
+			"Ids": [
+				"ParamEyeLOpen",
+				"ParamEyeROpen"
+			]
+		},
+		{
+			"Target": "Parameter",
+			"Name": "LipSync",
+			"Ids": []
+		}
+	],
+	"HitAreas": []
+}

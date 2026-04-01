@@ -17,56 +17,21 @@
       <div class="bubble-tail"></div>
     </div>
 
-    <!-- 桌宠主体 -->
+    <!-- Live2D 桌宠主体 -->
     <div id="pet-container" class="pet-container">
-      <div id="pet" class="pet" data-state="idle">
-        <!-- 耳朵 -->
-        <div class="ear ear-left">
-          <div class="ear-inner"></div>
-        </div>
-        <div class="ear ear-right">
-          <div class="ear-inner"></div>
-        </div>
-
-        <!-- 身体 -->
-        <div class="body">
-          <!-- 脸部 -->
-          <div class="face">
-            <!-- 眼睛 -->
-            <div class="eye eye-left">
-              <div class="pupil"></div>
-              <div class="shine"></div>
-            </div>
-            <div class="eye eye-right">
-              <div class="pupil"></div>
-              <div class="shine"></div>
-            </div>
-
-            <!-- 腮红 -->
-            <div class="blush blush-left"></div>
-            <div class="blush blush-right"></div>
-
-            <!-- 鼻子 -->
-            <div class="nose"></div>
-
-            <!-- 嘴巴 -->
-            <div class="mouth"></div>
-          </div>
-        </div>
-
-        <!-- 尾巴 -->
-        <div class="tail"></div>
-
-        <!-- 前爪 -->
-        <div class="paw paw-left"></div>
-        <div class="paw paw-right"></div>
-
-        <!-- 状态特效 -->
-        <div id="effects" class="effects"></div>
-      </div>
+      <canvas id="live2d-canvas"></canvas>
+      <!-- 状态特效 -->
+      <div id="effects" class="effects"></div>
     </div>
   </div>
 
+  <!-- Live2D 核心库 -->
+  <script src="lib/live2dcubismcore.min.js"></script>
+  <!-- PixiJS -->
+  <script src="lib/pixi.min.js"></script>
+  <!-- pixi-live2d-display -->
+  <script src="lib/pixi-live2d-display.min.js"></script>
+  <!-- 应用逻辑 -->
   <script src="js/app.js"></script>
 </body>
 </html>

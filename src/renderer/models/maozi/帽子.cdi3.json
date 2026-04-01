@@ -1,0 +1,607 @@
+{
+	"Version": 3,
+	"Parameters": [
+		{
+			"Id": "Param11",
+			"GroupId": "ParamGroup",
+			"Name": "py-eyeR0"
+		},
+		{
+			"Id": "Param4",
+			"GroupId": "ParamGroup",
+			"Name": "py-eyeR1"
+		},
+		{
+			"Id": "Param2",
+			"GroupId": "ParamGroup",
+			"Name": "py-eyeR2"
+		},
+		{
+			"Id": "Param46",
+			"GroupId": "ParamGroup",
+			"Name": "py-eyeR-shine"
+		},
+		{
+			"Id": "Param12",
+			"GroupId": "ParamGroup",
+			"Name": "py-eyeL0"
+		},
+		{
+			"Id": "Param5",
+			"GroupId": "ParamGroup",
+			"Name": "py-eyeL1"
+		},
+		{
+			"Id": "Param3",
+			"GroupId": "ParamGroup",
+			"Name": "py-eyeL2"
+		},
+		{
+			"Id": "Param45",
+			"GroupId": "ParamGroup",
+			"Name": "py-eyeL-shine"
+		},
+		{
+			"Id": "Param67",
+			"GroupId": "ParamGroup",
+			"Name": "PPeye-turning"
+		},
+		{
+			"Id": "Param61",
+			"GroupId": "ParamGroup",
+			"Name": "PPpy-eyeR-disgust"
+		},
+		{
+			"Id": "Param62",
+			"GroupId": "ParamGroup",
+			"Name": "PPpy-eyeL-disgust"
+		},
+		{
+			"Id": "Param6",
+			"GroupId": "ParamGroup2",
+			"Name": "py-hairFrtR"
+		},
+		{
+			"Id": "Param7",
+			"GroupId": "ParamGroup2",
+			"Name": "py-hairFrtR2"
+		},
+		{
+			"Id": "Param8",
+			"GroupId": "ParamGroup2",
+			"Name": "py-hairMidR"
+		},
+		{
+			"Id": "Param13",
+			"GroupId": "ParamGroup2",
+			"Name": "py-hairMidR2"
+		},
+		{
+			"Id": "Param9",
+			"GroupId": "ParamGroup2",
+			"Name": "py-hairBang"
+		},
+		{
+			"Id": "Param56",
+			"GroupId": "ParamGroup2",
+			"Name": "py-hairBang2"
+		},
+		{
+			"Id": "Param10",
+			"GroupId": "ParamGroup2",
+			"Name": "py-hairBack"
+		},
+		{
+			"Id": "Param37",
+			"GroupId": "ParamGroup2",
+			"Name": "py-hairBack2"
+		},
+		{
+			"Id": "Param17",
+			"GroupId": "ParamGroup2",
+			"Name": "py-hatBand"
+		},
+		{
+			"Id": "Param32",
+			"GroupId": "ParamGroup2",
+			"Name": "py-hat-x"
+		},
+		{
+			"Id": "Param33",
+			"GroupId": "ParamGroup2",
+			"Name": "py-hat-y"
+		},
+		{
+			"Id": "Param14",
+			"GroupId": "ParamGroup3",
+			"Name": "py-collar1b-x"
+		},
+		{
+			"Id": "Param34",
+			"GroupId": "ParamGroup3",
+			"Name": "py-collar1b-y"
+		},
+		{
+			"Id": "Param18",
+			"GroupId": "ParamGroup3",
+			"Name": "py-skirt-x"
+		},
+		{
+			"Id": "Param19",
+			"GroupId": "ParamGroup3",
+			"Name": "py-skirt-y"
+		},
+		{
+			"Id": "Param25",
+			"GroupId": "ParamGroup3",
+			"Name": "py-armR-y"
+		},
+		{
+			"Id": "Param35",
+			"GroupId": "ParamGroup3",
+			"Name": "py-armL-y"
+		},
+		{
+			"Id": "Param29",
+			"GroupId": "ParamGroup3",
+			"Name": "py-slvR-y"
+		},
+		{
+			"Id": "Param36",
+			"GroupId": "ParamGroup3",
+			"Name": "py-slvL-y"
+		},
+		{
+			"Id": "Param21",
+			"GroupId": "ParamGroup4",
+			"Name": "tearON"
+		},
+		{
+			"Id": "Param22",
+			"GroupId": "ParamGroup4",
+			"Name": "tearR-T"
+		},
+		{
+			"Id": "Param24",
+			"GroupId": "ParamGroup4",
+			"Name": "tearL-T"
+		},
+		{
+			"Id": "Param23",
+			"GroupId": "ParamGroup4",
+			"Name": "tear-U"
+		},
+		{
+			"Id": "Param30",
+			"GroupId": "ParamGroup4",
+			"Name": "tearR-blink"
+		},
+		{
+			"Id": "Param31",
+			"GroupId": "ParamGroup4",
+			"Name": "tearL-blink"
+		},
+		{
+			"Id": "Param28",
+			"GroupId": "ParamGroup5",
+			"Name": "soda-ON"
+		},
+		{
+			"Id": "Param26",
+			"GroupId": "ParamGroup5",
+			"Name": "soda-tongue1"
+		},
+		{
+			"Id": "Param27",
+			"GroupId": "ParamGroup5",
+			"Name": "sodaP-spoon"
+		},
+		{
+			"Id": "Param38",
+			"GroupId": "ParamGroup5",
+			"Name": "spoon1"
+		},
+		{
+			"Id": "Param39",
+			"GroupId": "ParamGroup5",
+			"Name": "spoon2"
+		},
+		{
+			"Id": "Param40",
+			"GroupId": "ParamGroup5",
+			"Name": "spoon3"
+		},
+		{
+			"Id": "Param41",
+			"GroupId": "ParamGroup5",
+			"Name": "spoon4"
+		},
+		{
+			"Id": "Param42",
+			"GroupId": "ParamGroup5",
+			"Name": "soda-rise"
+		},
+		{
+			"Id": "Param43",
+			"GroupId": "ParamGroup6",
+			"Name": "angerON"
+		},
+		{
+			"Id": "Param44",
+			"GroupId": "ParamGroup6",
+			"Name": "shineON"
+		},
+		{
+			"Id": "Param",
+			"GroupId": "ParamGroup6",
+			"Name": "thrillON"
+		},
+		{
+			"Id": "Param15",
+			"GroupId": "ParamGroup6",
+			"Name": "hatOFF"
+		},
+		{
+			"Id": "Param16",
+			"GroupId": "ParamGroup6",
+			"Name": "PPdisgustON"
+		},
+		{
+			"Id": "ParamAngleX",
+			"GroupId": "",
+			"Name": "角度 X"
+		},
+		{
+			"Id": "ParamAngleY",
+			"GroupId": "",
+			"Name": "角度 Y"
+		},
+		{
+			"Id": "ParamAngleZ",
+			"GroupId": "",
+			"Name": "角度 Z"
+		},
+		{
+			"Id": "ParamBodyAngleX",
+			"GroupId": "",
+			"Name": "身体旋转　X"
+		},
+		{
+			"Id": "ParamBodyAngleY",
+			"GroupId": "",
+			"Name": "身体旋转　Y"
+		},
+		{
+			"Id": "ParamBodyAngleZ",
+			"GroupId": "",
+			"Name": "身体旋转　Z"
+		},
+		{
+			"Id": "ParamMouthForm",
+			"GroupId": "",
+			"Name": "嘴部　变形"
+		},
+		{
+			"Id": "ParamMouthOpenY",
+			"GroupId": "",
+			"Name": "嘴巴　张开和闭合"
+		},
+		{
+			"Id": "ParamEyeLOpen",
+			"GroupId": "",
+			"Name": "左眼　开闭"
+		},
+		{
+			"Id": "ParamEyeLSmile",
+			"GroupId": "",
+			"Name": "左眼　微笑"
+		},
+		{
+			"Id": "ParamEyeROpen",
+			"GroupId": "",
+			"Name": "右眼"
+		},
+		{
+			"Id": "ParamEyeRSmile",
+			"GroupId": "",
+			"Name": "右眼　微笑"
+		},
+		{
+			"Id": "ParamEyeBallX",
+			"GroupId": "",
+			"Name": "眼球 X"
+		},
+		{
+			"Id": "ParamEyeBallY",
+			"GroupId": "",
+			"Name": "眼球 Y"
+		},
+		{
+			"Id": "ParamBrowLY",
+			"GroupId": "",
+			"Name": "左眉上下"
+		},
+		{
+			"Id": "ParamBrowRY",
+			"GroupId": "",
+			"Name": "右眉　上下"
+		},
+		{
+			"Id": "ParamBreath",
+			"GroupId": "",
+			"Name": "呼吸"
+		},
+		{
+			"Id": "ParamBrowLX",
+			"GroupId": "",
+			"Name": "左眉　左右"
+		},
+		{
+			"Id": "ParamBrowRX",
+			"GroupId": "",
+			"Name": "右眉　左右"
+		},
+		{
+			"Id": "ParamBrowLAngle",
+			"GroupId": "",
+			"Name": "左眉　角度"
+		},
+		{
+			"Id": "ParamBrowRAngle",
+			"GroupId": "",
+			"Name": "右眉　角度"
+		},
+		{
+			"Id": "ParamBrowLForm",
+			"GroupId": "",
+			"Name": "左眉　変形"
+		},
+		{
+			"Id": "ParamBrowRForm",
+			"GroupId": "",
+			"Name": "右眉　変形"
+		},
+		{
+			"Id": "ParamCheek",
+			"GroupId": "",
+			"Name": "脸颊"
+		},
+		{
+			"Id": "ParamHairFront",
+			"GroupId": "",
+			"Name": "摇动　前发"
+		},
+		{
+			"Id": "ParamHairSide",
+			"GroupId": "",
+			"Name": "摇动　侧发"
+		},
+		{
+			"Id": "ParamHairBack",
+			"GroupId": "",
+			"Name": "摇动　后发"
+		}
+	],
+	"ParameterGroups": [
+		{
+			"Id": "ParamGroup",
+			"GroupId": "",
+			"Name": "py-eye"
+		},
+		{
+			"Id": "ParamGroup2",
+			"GroupId": "",
+			"Name": "py-hair"
+		},
+		{
+			"Id": "ParamGroup3",
+			"GroupId": "",
+			"Name": "py-body"
+		},
+		{
+			"Id": "ParamGroup4",
+			"GroupId": "",
+			"Name": "exp-tears"
+		},
+		{
+			"Id": "ParamGroup5",
+			"GroupId": "",
+			"Name": "exp-soda"
+		},
+		{
+			"Id": "ParamGroup6",
+			"GroupId": "",
+			"Name": "exps"
+		}
+	],
+	"Parts": [
+		{
+			"Id": "new2",
+			"Name": "new"
+		},
+		{
+			"Id": "angleRef",
+			"Name": "angleRef"
+		},
+		{
+			"Id": "all",
+			"Name": "all"
+		},
+		{
+			"Id": "Part20",
+			"Name": "items"
+		},
+		{
+			"Id": "PartSketch0",
+			"Name": "[ 参考图 ]"
+		},
+		{
+			"Id": "headSet",
+			"Name": "headSet"
+		},
+		{
+			"Id": "Part14",
+			"Name": "exp"
+		},
+		{
+			"Id": "facialFeatures",
+			"Name": "facialFeatures"
+		},
+		{
+			"Id": "faceBase",
+			"Name": "faceBase"
+		},
+		{
+			"Id": "body",
+			"Name": "body"
+		},
+		{
+			"Id": "extra",
+			"Name": "extra"
+		},
+		{
+			"Id": "hat1",
+			"Name": "hat1"
+		},
+		{
+			"Id": "eyebrow",
+			"Name": "eyebrow"
+		},
+		{
+			"Id": "hair1",
+			"Name": "hair1"
+		},
+		{
+			"Id": "Part13",
+			"Name": "NEW-soda"
+		},
+		{
+			"Id": "Part",
+			"Name": "expression2-soda"
+		},
+		{
+			"Id": "Part11",
+			"Name": "NEW-tear"
+		},
+		{
+			"Id": "Part2",
+			"Name": "expression1-tears"
+		},
+		{
+			"Id": "nose",
+			"Name": "nose"
+		},
+		{
+			"Id": "mouth",
+			"Name": "mouth"
+		},
+		{
+			"Id": "eyes",
+			"Name": "eyes"
+		},
+		{
+			"Id": "Part8",
+			"Name": "sdw-bang"
+		},
+		{
+			"Id": "upr",
+			"Name": "upr"
+		},
+		{
+			"Id": "arms",
+			"Name": "arms"
+		},
+		{
+			"Id": "lwr",
+			"Name": "lwr"
+		},
+		{
+			"Id": "hat2",
+			"Name": "hat2"
+		},
+		{
+			"Id": "Part9",
+			"Name": "hairMid"
+		},
+		{
+			"Id": "Part18",
+			"Name": "spoons"
+		},
+		{
+			"Id": "tearsR",
+			"Name": "tearsR"
+		},
+		{
+			"Id": "Part12",
+			"Name": "tear-hlt"
+		},
+		{
+			"Id": "shapeRef",
+			"Name": "shapeRef"
+		},
+		{
+			"Id": "mouthParts",
+			"Name": "mouthParts"
+		},
+		{
+			"Id": "eyelashR",
+			"Name": "eyelashR"
+		},
+		{
+			"Id": "eyelashL",
+			"Name": "eyelashL"
+		},
+		{
+			"Id": "Part16",
+			"Name": "PEP(给原皮追加表情).psd"
+		},
+		{
+			"Id": "pupilR",
+			"Name": "pupilR"
+		},
+		{
+			"Id": "pupilL",
+			"Name": "pupilL"
+		},
+		{
+			"Id": "Part15",
+			"Name": "eyewhite"
+		},
+		{
+			"Id": "collar1",
+			"Name": "collar1"
+		},
+		{
+			"Id": "Part3",
+			"Name": "mthOpen-1"
+		},
+		{
+			"Id": "Part4",
+			"Name": "mthOpen-0.5"
+		},
+		{
+			"Id": "Part5",
+			"Name": "mthOpen-0"
+		},
+		{
+			"Id": "lips",
+			"Name": "lips"
+		},
+		{
+			"Id": "mouthCover2",
+			"Name": "mouthCover"
+		},
+		{
+			"Id": "Part10",
+			"Name": "mouthInner"
+		},
+		{
+			"Id": "Part6",
+			"Name": "pupilColor-R"
+		},
+		{
+			"Id": "Part7",
+			"Name": "pupilColor-L"
+		}
+	]
+}
