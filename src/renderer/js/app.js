@@ -76,6 +76,7 @@
 
   // ========== 加载 Live2D 模型 ==========
   async function loadModel(modelKey) {
+    clearRandomAnimation();
     const modelConfig = MODELS[modelKey];
     if (!modelConfig) {
       console.error('[Taro Pet] 未知模型:', modelKey);
@@ -129,6 +130,7 @@
       // 保存当前模型到配置
       window.taroAPI.updateConfig({ currentModel: modelKey });
 
+      scheduleNextRandomAnimation();
 
     } catch (err) {
       console.error('[Taro Pet] 模型加载失败:', err);
@@ -220,6 +222,7 @@
       if (!isOverModel || isDragging) return;
 
       resetSleepTimer();
+      scheduleNextRandomAnimation();
       spawnHearts(3);
 
       showBubble('(被摸到了...)');
@@ -234,6 +237,7 @@
     // 双击触发截图分析
     document.addEventListener('dblclick', (e) => {
       if (!isOverModel) return;
+      scheduleNextRandomAnimation();
       showBubble('(凑近屏幕观察中...)');
       window.taroAPI.triggerAnalysis();
     });
@@ -242,6 +246,7 @@
     document.addEventListener('contextmenu', (e) => {
       if (!isOverModel) return;
       e.preventDefault();
+      scheduleNextRandomAnimation();
       
       let animations = { expressions: [], motions: [] };
       if (currentModel && currentModel.internalModel && currentModel.internalModel.settings) {
@@ -296,6 +301,88 @@
     });
   }
 
+  // ========== 随机动画系统 ==========
+  let randomAnimTimer = null;
+  let loopAnimInterval = null;
+  let loopTimeout = null;
+
+  function scheduleNextRandomAnimation() {
+    clearRandomAnimation();
+    // 随机 30 秒到 90 秒之间触发一次
+    const nextTime = Math.random() * 60000 + 30000;
+    randomAnimTimer = setTimeout(triggerRandomLoopingAnimation, nextTime);
+  }
+
+  function clearRandomAnimation() {
+    if (randomAnimTimer) clearTimeout(randomAnimTimer);
+    if (loopAnimInterval) clearTimeout(loopAnimInterval);
+    if (loopTimeout) clearTimeout(loopTimeout);
+  }
+
+  function triggerRandomLoopingAnimation() {
+    if (!currentModel || currentState !== 'idle') {
+      scheduleNextRandomAnimation();
+      return;
+    }
+
+    const settings = currentModel.internalModel?.settings;
+    if (!settings) {
+      scheduleNextRandomAnimation();
+      return;
+    }
+
+    // 提取可用的动作
+    let allMotions = [];
+    const motionsObj = settings.motions || {};
+    for (let groupName in motionsObj) {
+      if (groupName.toLowerCase() === 'idle') continue;
+      const group = motionsObj[groupName];
+      if (Array.isArray(group)) {
+        group.forEach((_, idx) => {
+          allMotions.push({ group: groupName, index: idx });
+        });
+      }
+    }
+
+    if (allMotions.length === 0) {
+      scheduleNextRandomAnimation();
+      return;
+    }
+
+    // 选一个随机的动作
+    const randomMotion = allMotions[Math.floor(Math.random() * allMotions.length)];
+    console.log('[Taro Pet] 触发随机循环动作:', randomMotion);
+
+    showBubble('(活动一下身体...)');
+
+    // 连续播放同一个动作，每次间隔 4 秒，循环 3 次
+    let playCount = 0;
+    const maxPlays = 3;
+
+    function playLoop() {
+      if (!currentModel || currentState !== 'idle') {
+        // 如果状态变了，中断循环
+        scheduleNextRandomAnimation();
+        return;
+      }
+      
+      currentModel.motion(randomMotion.group, randomMotion.index);
+      playCount++;
+
+      if (playCount < maxPlays) {
+        loopAnimInterval = setTimeout(playLoop, 4000);
+      } else {
+        loopTimeout = setTimeout(() => {
+          console.log('[Taro Pet] 循环动作结束，恢复默认');
+          showBubble('(呼...好些了)');
+          loadModel(currentModelKey); // 重新加载恢复默认状态，防止产生残影
+        }, 5000);
+      }
+    }
+
+    playLoop();
+  }
+
   // ========== 播放随机动作 ==========
   function playRandomMotion() {
     if (!currentModel) return;
@@ -339,6 +426,7 @@
 
     // 播放指定动画回调
     window.taroAPI.onPlayAnimation((animData) => {
+      scheduleNextRandomAnimation();
       if (!currentModel) return;
       try {
         if (animData.type === 'expression') {
